@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONG Esperança Viva</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/imask@7.6.1/dist/imask.min.js"></script>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="site-header__inner">
+            <h1 class="site-header__brand">ONG Esperança Viva</h1>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="nav-toggle__label" aria-label="Abrir menu de navegação">
+                <span></span><span></span><span></span>
+            </label>
+            <nav class="site-nav" aria-label="Navegação principal">
+                <ul class="site-nav__list">
+                    <li><a href="#/" data-route>Início</a></li>
+                    <li><a href="#/projetos" data-route>Projetos</a></li>
+                    <li><a href="#/cadastro" class="site-nav__cta" data-route>Seja Voluntário</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="app"></main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 ONG Esperança Viva. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="../js/templates.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/validacao.js"></script>
+    <script src="../js/router.js"></script>
+    
+</body>
+</html>
