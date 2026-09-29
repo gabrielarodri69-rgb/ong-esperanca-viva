@@ -84,9 +84,11 @@ async function buildHtml() {
   );
 }
 
-/* 4. Imagens: recomprime JPG (com perda leve) e PNG (sem perda).
-      Só usa a versão comprimida se ela for realmente menor. */
+/* 4. Imagens: redimensiona para o tamanho máximo de exibição, recomprime
+      e gera uma versão .webp de cada uma. */
 async function buildImagens() {
+  const LARGURA_MAXIMA = 800; // ~2x o maior tamanho exibido no layout (370px, 3 colunas)
+
   async function percorrer(pasta) {
     for (const entrada of await readdir(pasta, { withFileTypes: true })) {
       const origem = join(pasta, entrada.name);
@@ -95,18 +97,30 @@ async function buildImagens() {
         continue;
       }
       const ext = extname(entrada.name).toLowerCase();
-      const original = await readFile(origem);
-      let otimizada = original;
+      if (![".jpg", ".jpeg", ".png"].includes(ext)) continue;
 
-      if (ext === ".jpg" || ext === ".jpeg") {
-        otimizada = await sharp(original).rotate().jpeg({ quality: 80, mozjpeg: true }).toBuffer();
-      } else if (ext === ".png") {
-        otimizada = await sharp(original).png({ compressionLevel: 9 }).toBuffer();
+      const original = await readFile(origem);
+      const metadata = await sharp(original).metadata();
+
+      let base = sharp(original).rotate();
+      if (metadata.width > LARGURA_MAXIMA) {
+        base = base.resize({ width: LARGURA_MAXIMA });
       }
 
+      let otimizada;
+      if (ext === ".jpg" || ext === ".jpeg") {
+        otimizada = await base.clone().jpeg({ quality: 80, mozjpeg: true }).toBuffer();
+      } else {
+        otimizada = await base.clone().png({ compressionLevel: 9 }).toBuffer();
+      }
       const final = otimizada.length < original.length ? otimizada : original;
       await salvar(join(DIST, origem), final);
       registrar("imagens", origem.replaceAll("\\", "/"), original.length, final.length);
+
+      const webp = await base.clone().webp({ quality: 80 }).toBuffer();
+      const caminhoWebp = origem.replace(/\.(jpg|jpeg|png)$/i, ".webp");
+      await salvar(join(DIST, caminhoWebp), webp);
+      registrar("imagens", caminhoWebp.replaceAll("\\", "/") + " (novo)", original.length, webp.length);
     }
   }
   await percorrer("imagens");
