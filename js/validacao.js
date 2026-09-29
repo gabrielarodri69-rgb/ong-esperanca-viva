@@ -19,7 +19,8 @@ function initFormValidation() {
 
   renderListaCadastros(); // mostra cadastros já salvos ao entrar na página
   aplicarMascarasDeInput(); // formata CPF, telefone e CEP enquanto o usuário digita
-  
+}
+
   const validadores = {
     nome: (v) => v.trim().length >= 3 || "Digite seu nome completo (mínimo 3 letras).",
     email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || "Digite um e-mail válido, ex: nome@exemplo.com.",
@@ -35,18 +36,19 @@ function initFormValidation() {
     const resultado = regra(input.value);
     const erroEl = document.getElementById("erro-" + input.name);
 
-    if (resultado === true) {
-      input.classList.remove("form-field__input--invalid");
-      input.classList.add("form-field__input--valid");
-      if (erroEl) erroEl.textContent = "";
-      return true;
-    }
+if (resultado === true) {
+  input.classList.remove("form-field__input--invalid");
+  input.classList.add("form-field__input--valid");
+  input.setAttribute("aria-invalid", "false");
+  if (erroEl) erroEl.textContent = "";
+  return true;
+}
 
-    input.classList.add("form-field__input--invalid");
-    input.classList.remove("form-field__input--valid");
-    if (erroEl) erroEl.textContent = resultado;
-    return false;
-  }
+input.classList.add("form-field__input--invalid");
+input.classList.remove("form-field__input--valid");
+input.setAttribute("aria-invalid", "true");
+if (erroEl) erroEl.textContent = resultado;
+return false;
 
   Object.keys(validadores).forEach((nome) => {
     const input = form.elements[nome];

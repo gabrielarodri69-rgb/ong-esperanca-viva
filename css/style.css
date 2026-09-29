@@ -146,7 +146,6 @@ p { margin: 0 0 var(--space-3); max-width: 65ch; }
 .site-nav__cta:hover { background: var(--color-secondary-700); }
 
 /* Menu hambúrguer (mobile) */
-.nav-toggle { display: none; }
 
 .nav-toggle__label {
   display: none;
@@ -162,6 +161,19 @@ p { margin: 0 0 var(--space-3); max-width: 65ch; }
   background: var(--color-white);
   border-radius: 2px;
   transition: transform var(--transition-base), opacity var(--transition-base);
+}
+.nav-toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  clip: rect(0, 0, 0, 0);
+}
+
+.nav-toggle:focus-visible ~ .nav-toggle__label {
+  outline: 3px solid var(--color-accent-400);
+  outline-offset: 2px;
 }
 
 @media (max-width: 56.24em) {
@@ -254,6 +266,7 @@ p { margin: 0 0 var(--space-3); max-width: 65ch; }
 .volunteer-list__img { width: 100%; height: 180px; object-fit: cover; background: var(--color-neutral-200); }
 .volunteer-list__item p { margin: 0; padding: var(--space-3); }
 .volunteer-block__cta { font-size: var(--fs-h3); font-family: var(--font-display); color: var(--color-primary-900); }
+.volunteer-list__item picture { display: block; }
 
 /* Campanhas de doação */
 .donation-block {
@@ -318,21 +331,13 @@ p { margin: 0 0 var(--space-3); max-width: 65ch; }
 }
 
 /* Toast de confirmação (checkbox hack) */
-.toast-trigger { display: none; }
-
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: var(--space-4);
-  transform: translate(-50%, 150%);
-  background: var(--color-primary-900);
-  color: var(--color-white);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-card);
-  transition: transform var(--transition-base);
-  z-index: 20;
-  max-width: 90vw;
+.toast-trigger {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  clip: rect(0, 0, 0, 0);
 }
 
 .toast-trigger:checked ~ .toast { transform: translate(-50%, 0); }
@@ -354,7 +359,10 @@ p { margin: 0 0 var(--space-3); max-width: 65ch; }
   transition: border-color var(--transition-base);
 }
 .form-field input:hover { border-color: var(--color-neutral-400); }
-.form-field input:focus { border-color: var(--color-accent-400); }
+.form-field input:focus {
+  border-color: var(--color-accent-400);
+  box-shadow: 0 0 0 3px rgba(78, 125, 187, 0.25);
+}
 .form-field input:invalid:not(:placeholder-shown) { border-color: var(--color-danger); }
 .form-field input:required:valid:not(:placeholder-shown) { border-color: var(--color-primary-500); }
 .form-cadastro .button { width: 100%; }
@@ -374,4 +382,128 @@ p { margin: 0 0 var(--space-3); max-width: 65ch; }
   .site-header__inner { flex-wrap: nowrap; }
   .volunteer-list { grid-template-columns: repeat(3, 1fr); }
   .form-cadastro__group { padding: var(--space-5); }
+}
+
+/* Acessibilidade: skip link e texto só-para-leitor-de-tela */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-3);
+  background: var(--color-primary-900);
+  color: var(--color-white);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  z-index: 100;
+  transition: top var(--transition-base);
+}
+.skip-link:focus {
+  top: var(--space-3);
+}
+
+/* ==========================================================================
+   COR E ACESSIBILIDADE — contraste WCAG AA, modo escuro e alto contraste
+   ========================================================================== */
+
+/* 1. Correções de contraste do tema claro */
+:root {
+  color-scheme: light dark;
+  --color-secondary-800: #8A4E20;
+  --color-neutral-500: #6B6B66;
+}
+
+.button--primary,
+.site-nav__cta { background: var(--color-secondary-700); }
+.button--primary:hover,
+.button--primary:active { background: var(--color-secondary-800); }
+.button--primary:disabled { background: var(--color-neutral-200); }
+.badge--sazonal { color: var(--color-secondary-800); }
+.badge--financeira { background: var(--color-accent-600); }
+.alert--warning { color: var(--color-secondary-800); }
+.form-field input { border-color: var(--color-neutral-500); }
+.form-field input::placeholder { color: var(--color-neutral-500); }
+
+/* 2. Modo escuro (segue a preferência do sistema) */
+@media (prefers-color-scheme: dark) {
+  body { background: #161816; color: #ECEBE6; }
+  a { color: #8DB4F0; }
+  a:hover { color: #B9D3F7; }
+  h1, h2, h3 { color: #CDEBE2; }
+
+  .section--tinted { background: #1A2723; }
+  .card, .volunteer-list__item { background: #202422; }
+  .card { border-color: #343936; border-top-color: var(--color-primary-500); }
+  .volunteer-block__cta { color: #CDEBE2; }
+  .donation-block { background: #2A2119; }
+
+  .form-cadastro__group { border-color: #343936; }
+  .form-cadastro__group legend { color: #8FD0BE; }
+  .form-field label { color: #C9C8C2; }
+  .form-field input { background: #1B1E1C; color: #ECEBE6; border-color: #7C817C; }
+  .form-field input::placeholder { color: #A3A39D; }
+  .form-field input.form-field__input--invalid,
+  .form-field input:invalid:not(:placeholder-shown) { border-color: #FF9A90; }
+  .form-field input.form-field__input--valid,
+  .form-field input:required:valid:not(:placeholder-shown) { border-color: #6FCDB2; }
+  .form-field__error { color: #FF9A90; }
+
+  .alert--info { background: #17302A; color: #D6EFE7; }
+  .alert--success { background: #16301F; color: #D6F0DC; }
+  .alert--warning { background: #33261A; color: #F3D2A8; }
+  .alert--error { background: #331C1A; color: #FFB4AB; border-color: #FF9A90; }
+
+  .badge--sazonal { background: #3A2A1B; color: #F0C79A; }
+  .badge--continua { background: #1D3A33; color: #A5DCCB; }
+
+  img { filter: brightness(0.9); }
+}
+
+/* 3. Alto contraste (preferência do sistema) */
+@media (prefers-contrast: more) {
+  body { background: Canvas; color: CanvasText; }
+  a { color: LinkText; text-decoration: underline; text-decoration-thickness: 2px; }
+  h1, h2, h3 { color: CanvasText; }
+
+  .site-header, .site-footer, .page-intro, .hero { background: #000; color: #fff; }
+  .site-nav a { color: #fff; text-decoration: underline; }
+  .hero__lead, .hero__kicker, .page-intro p { color: #fff; }
+  .section--tinted { background: Canvas; border-block: 2px solid CanvasText; }
+
+  .card, .volunteer-list__item, .donation-block,
+  .form-cadastro__group, .alert, .badge {
+    background: Canvas; color: CanvasText; border: 2px solid CanvasText;
+  }
+
+  .button--primary, .site-nav__cta {
+    background: #6E3510; color: #fff; border: 2px solid currentColor;
+  }
+
+  .form-field input { background: Canvas; color: CanvasText; border: 2px solid CanvasText; }
+  .form-field input::placeholder { color: CanvasText; font-style: italic; }
+  .form-field input[aria-invalid="true"] { border-style: dashed; border-width: 3px; }
+  .form-field__error { color: CanvasText; font-weight: 700; }
+
+  :focus-visible {
+    outline: 3px solid CanvasText;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px Canvas;
+  }
+}
+
+/* 4. Cores forçadas (Alto Contraste do Windows) */
+@media (forced-colors: active) {
+  .card, .volunteer-list__item, .donation-block, .alert,
+  .badge, .toast, .form-cadastro__group { border: 2px solid CanvasText; }
+  .button, .site-nav__cta { border: 2px solid ButtonText; }
+  .nav-toggle__label span { forced-color-adjust: none; background: ButtonText; }
+  :focus-visible { outline: 3px solid Highlight; }
 }
