@@ -65,9 +65,13 @@ function renderCardProjeto(projeto) {
 }
 
 function renderItemVoluntariado(item) {
+  const webp = item.imagem.replace(/\.(jpg|jpeg|png)$/i, ".webp");
   return `
     <li class="volunteer-list__item">
-      <img src="${item.imagem}" alt="${item.alt}" class="volunteer-list__img">
+      <picture>
+        <source srcset="${webp}" type="image/webp">
+        <img src="${item.imagem}" alt="${item.alt}" class="volunteer-list__img" width="370" height="180" loading="lazy">
+      </picture>
       <p><strong>${item.titulo}:</strong> ${item.descricao}</p>
     </li>
   `;
