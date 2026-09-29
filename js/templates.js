@@ -198,16 +198,19 @@ function renderCadastro() {
             <p class="form-field">
               <label for="nome">Nome Completo:</label>
               <input type="text" id="nome" name="nome" required minlength="3">
+              <input type="text" id="nome" name="nome" required minlength="3" aria-describedby="erro-nome">
               <span class="form-field__error" id="erro-nome" role="alert"></span>
             </p>
             <p class="form-field">
               <label for="email">E-mail:</label>
               <input type="email" id="email" name="email" required>
+              <input type="email" id="email" name="email" required aria-describedby="erro-email">
               <span class="form-field__error" id="erro-email" role="alert"></span>
             </p>
             <p class="form-field">
               <label for="cpf">CPF:</label>
               <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" required>
+              <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" required aria-describedby="erro-cpf">
               <span class="form-field__error" id="erro-cpf" role="alert"></span>
             </p>
           </fieldset>
@@ -221,11 +224,13 @@ function renderCadastro() {
             <p class="form-field">
               <label for="telefone">Telefone:</label>
               <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" maxlength="15" required>
+              <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" maxlength="15" required aria-describedby="erro-telefone">
               <span class="form-field__error" id="erro-telefone" role="alert"></span>
             </p>
             <p class="form-field">
               <label for="cep">CEP:</label>
               <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9" required>
+              <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9" required aria-describedby="erro-cep">
               <span class="form-field__error" id="erro-cep" role="alert"></span>
             </p>
           </fieldset>

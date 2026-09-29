@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
     <title>ONG Esperança Viva</title>
     <meta name="description" content="Plataforma da ONG Esperanca Viva para gestao de projetos sociais, campanhas de doacao e cadastro de voluntarios.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,12 +13,13 @@
     <script src="https://cdn.jsdelivr.net/npm/imask@7.6.1/dist/imask.min.js"></script>
 </head>
 <body>
+    <a href="#app" class="skip-link">Pular para o conteúdo principal</a>
 
     <header class="site-header">
         <div class="site-header__inner">
             <h1 class="site-header__brand">ONG Esperança Viva</h1>
             <input type="checkbox" id="nav-toggle" class="nav-toggle">
-            <label for="nav-toggle" class="nav-toggle__label" aria-label="Abrir menu de navegação">
+            <label for="nav-toggle" id="nav-toggle-label" class="nav-toggle__label" aria-label="Abrir menu de navegação" aria-expanded="false">
                 <span></span><span></span><span></span>
             </label>
             <nav class="site-nav" aria-label="Navegação principal">
@@ -31,6 +33,7 @@
     </header>
 
     <main id="app"></main>
+    <div id="route-announcer" class="sr-only" aria-live="polite" role="status"></div>
 
     <footer class="site-footer">
         <p>&copy; 2026 ONG Esperança Viva. Todos os direitos reservados.</p>

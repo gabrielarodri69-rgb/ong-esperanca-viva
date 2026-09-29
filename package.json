@@ -1,0 +1,21 @@
+{
+  "name": "ong-esperanca-viva",
+  "version": "1.0.0",
+  "description": "Single Page Application (SPA) desenvolvida como projeto academico para uma plataforma de gestao de atividades, projetos e voluntariado de uma ONG ficticia.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielarodri69-rgb/ong-esperanca-viva.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "html-minifier-terser": "^7.2.0",
+    "sharp": "^0.35.5"
+  }
+}
