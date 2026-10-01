@@ -58,6 +58,14 @@ Não há comando de build nem suíte de testes automatizados configurada — a v
 - `develop` — integração contínua do desenvolvimento
 - `feature/*` — desenvolvimento isolado de cada funcionalidade nova
 
+## 🧭 Estratégia de Roteamento em Produção
+
+A aplicação usa **hash routing** (`#/rota`) em vez de roteamento por caminho real (`/rota`). Isso é o que garante que o GitHub Pages funcione corretamente mesmo com links diretos para uma tela interna: o fragmento após o `#` nunca é enviado ao servidor, então toda requisição — seja para `/`, seja para uma rota interna — pede ao servidor apenas o arquivo `index.html`. O JavaScript então lê `window.location.hash` no carregamento e renderiza a view correta no lado do cliente, sem exigir nenhuma configuração de fallback/404 no servidor.
+
+**Como validar:** cole uma URL com uma rota interna diretamente na barra de endereço do navegador (sem passar pela navegação do site), por exemplo:
+`https://gabrielarodri69-rgb.github.io/ong-esperanca-viva/html/index.html#/cadastro`
+A página deve carregar já exibindo a tela de Cadastro, comprovando que o roteamento funciona mesmo no primeiro acesso direto, não só ao navegar pelo menu.
+
 ## 👤 Autoria
 
 Projeto desenvolvido para a disciplina de Desenvolvimento Front-End (ADS).
